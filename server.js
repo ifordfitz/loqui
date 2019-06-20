@@ -1,10 +1,17 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors');
 const db = mongoose.connection
+
 
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/videos'
 const port = process.env.PORT || 3000;
+
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200
+}
 // Connect to Mongo
 mongoose.connect(mongoURI, { useNewUrlParser: true },
   () => console.log('MongoDB connection established:', mongoURI)
@@ -19,7 +26,7 @@ app.use(express.json());
 
 
 const youtubeController = require('./controllers/youtube.js');
-app.use('/', youtubeController);
+app.use('/', cors(corsOptions), youtubeController);
 
 
 app.listen(port, ()=>{
