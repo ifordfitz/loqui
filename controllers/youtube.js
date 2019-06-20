@@ -9,7 +9,9 @@ router.post('/', (req, res)=>{
 });
 
 router.get('/', (req,res) => {
-  res.send('testing')
+  model.find({}, (err, foundModels)=>{
+        res.json(foundModels);
+    });
 })
 
 
